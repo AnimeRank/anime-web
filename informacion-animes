@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Información del anime - AnimeRank</title>
+
+    <link rel="stylesheet" href="../estilo-pagina/style.css">
+
+</head>
+
+
+<body>
+
+    <!-- ==========================================
+         ANIMERANK - INFORMACIÓN DEL ANIME
+         ========================================== -->
+
+
+    <header class="cabecera">
+
+        <div class="logo">
+            AnimeRank
+        </div>
+
+
+        <nav class="menu-principal">
+
+            <a href="../">🏠 Inicio</a>
+
+            <a href="../buscador/">🔎 Buscador</a>
+
+            <a href="../recomendados/">⭐ Recomendados</a>
+
+            <a href="../populares/">🔥 Populares</a>
+
+            <a href="../temporadas/">📅 Temporadas</a>
+
+            <a href="../generos/">🎭 Géneros</a>
+
+            <a href="../traductor/">🌐 Traductor</a>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- ==========================================
+             INFORMACIÓN DEL ANIME
+             ========================================== -->
+
+
+        <section class="informacion-anime-pagina">
+
+            <h1>Información del anime</h1>
+
+            <p>
+                Selecciona un anime para consultar toda su información.
+            </p>
+
+
+            <div id="ficha-anime">
+
+                <!--
+                Aquí aparecerá posteriormente
+                la información completa del anime.
+                -->
+
+                <p>
+                    🔎 Busca un anime desde AnimeRank
+                    para consultar su información.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 AnimeRank - Buscador y guía de anime
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
