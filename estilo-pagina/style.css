@@ -1,15 +1,20 @@
-/* ================================
+/* ==========================================
    ESTILO PRINCIPAL DE ANIMERANK
-   ================================ */
+   ========================================== */
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #0f0f14;
     color: white;
+    text-align: center;
 }
 
 h1 {
-    text-align: center;
     margin-top: 50px;
+    font-size: 48px;
+}
+
+p {
+    font-size: 20px;
 }
