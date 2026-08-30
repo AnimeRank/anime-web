@@ -1,20 +1,154 @@
 /* ==========================================
-   ESTILO PRINCIPAL DE ANIMERANK
+   ANIMERANK - DISEÑO PRINCIPAL
    ========================================== */
+
+* {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #0f0f14;
     color: white;
+}
+
+
+/* CABECERA */
+
+.cabecera {
+    padding: 20px 30px;
+    background: #17171f;
+    border-bottom: 1px solid #292936;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 18px;
+}
+
+.menu-principal {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.menu-principal a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #22222d;
+}
+
+.menu-principal a:hover {
+    background: #333342;
+}
+
+
+/* BUSCADOR CENTRAL */
+
+.buscador-principal {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.buscador-principal h1 {
+    font-size: 44px;
+    margin-bottom: 12px;
+}
+
+.buscador-principal p {
+    color: #b8b8c5;
+    font-size: 18px;
+}
+
+
+/* BARRA DE BÚSQUEDA */
+
+.barra-busqueda {
+    display: flex;
+    justify-content: center;
+    max-width: 700px;
+    margin: 30px auto 0;
+}
+
+.barra-busqueda input {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border-radius: 10px 0 0 10px;
+}
+
+.barra-busqueda button {
+    padding: 16px 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 0 10px 10px 0;
+}
+
+
+/* PRESENTACIÓN */
+
+.presentacion {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
     text-align: center;
 }
 
-h1 {
-    margin-top: 50px;
-    font-size: 48px;
+.presentacion h2 {
+    font-size: 30px;
 }
 
-p {
-    font-size: 20px;
+.presentacion p {
+    color: #b8b8c5;
+    line-height: 1.6;
+}
+
+
+/* SECCIONES */
+
+.secciones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px 20px 70px;
+}
+
+.seccion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 25px;
+    background: #17171f;
+    border: 1px solid #292936;
+    border-radius: 12px;
+    color: white;
+    text-decoration: none;
+}
+
+.seccion:hover {
+    background: #20202b;
+}
+
+.seccion span {
+    color: #aaaab8;
+}
+
+
+/* PIE DE PÁGINA */
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #17171f;
+    color: #888894;
 }
