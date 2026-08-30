@@ -47,12 +47,10 @@ async function buscarAnime() {
 
         const respuesta = await fetch("https://graphql.anilist.co", {
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-
             body: JSON.stringify({
                 query: query,
                 variables: {
@@ -93,7 +91,9 @@ async function buscarAnime() {
 
             const descripcion =
                 anime.description
-                ? anime.description.replace(/<[^>]*>/g, "").slice(0, 180) + "..."
+                ? anime.description
+                    .replace(/<[^>]*>/g, "")
+                    .slice(0, 180) + "..."
                 : "Sin descripción disponible.";
 
             tarjeta.innerHTML = `
@@ -124,6 +124,7 @@ async function buscarAnime() {
             `;
 
             resultados.appendChild(tarjeta);
+
         });
 
     } catch (error) {
@@ -136,10 +137,6 @@ async function buscarAnime() {
     }
 }
 
-
-// ==========================================
-// BOTÓN BUSCAR
-// ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
