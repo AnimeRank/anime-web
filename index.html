@@ -4,21 +4,126 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AnimeRank - Buscador y guía de anime</title>
+    <title>AnimeRank - Descubre tu próximo anime</title>
 
-    <!-- Conexión con el diseño de la página -->
     <link rel="stylesheet" href="estilo-pagina/style.css">
 </head>
 
 <body>
 
     <!-- ==========================================
-         PÁGINA PRINCIPAL DE ANIMERANK
+         ANIMERANK - PÁGINA PRINCIPAL
          ========================================== -->
 
-    <h1>AnimeRank</h1>
+    <header class="cabecera">
 
-    <p>Buscador y guía de anime</p>
+        <div class="logo">
+            AnimeRank
+        </div>
+
+        <nav class="menu-principal">
+
+            <a href="index.html">🏠 Inicio</a>
+
+            <a href="buscador/">🔎 Buscador</a>
+
+            <a href="recomendados/">⭐ Recomendados</a>
+
+            <a href="populares/">🔥 Populares</a>
+
+            <a href="temporadas/">📅 Temporadas</a>
+
+            <a href="generos/">🎭 Géneros</a>
+
+            <a href="traductor/">🌐 Traductor</a>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <!-- BUSCADOR CENTRAL -->
+
+        <section class="buscador-principal">
+
+            <h1>Descubre tu próximo anime</h1>
+
+            <p>
+                Busca un anime por nombre, género o temática.
+            </p>
+
+            <div class="barra-busqueda">
+
+                <input
+                    type="text"
+                    placeholder="🔎 Escribe el nombre de un anime..."
+                >
+
+                <button>
+                    Buscar
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRESENTACIÓN -->
+
+        <section class="presentacion">
+
+            <h2>Explora el mundo del anime</h2>
+
+            <p>
+                Encuentra animes de acción, fantasía, isekai,
+                reencarnación, magia, espadas, romance y mucho más.
+            </p>
+
+        </section>
+
+
+        <!-- SECCIONES -->
+
+        <section class="secciones">
+
+            <a href="recomendados/" class="seccion">
+                ⭐
+                <strong>Recomendados</strong>
+                <span>Animes que podrían gustarte</span>
+            </a>
+
+            <a href="populares/" class="seccion">
+                🔥
+                <strong>Populares</strong>
+                <span>Los animes más populares</span>
+            </a>
+
+            <a href="temporadas/" class="seccion">
+                📅
+                <strong>Temporadas</strong>
+                <span>Descubre los animes actuales</span>
+            </a>
+
+            <a href="generos/" class="seccion">
+                🎭
+                <strong>Géneros</strong>
+                <span>Explora por género</span>
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 AnimeRank - Buscador y guía de anime
+        </p>
+
+    </footer>
 
 </body>
 </html>
