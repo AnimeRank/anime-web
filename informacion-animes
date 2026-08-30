@@ -16,6 +16,7 @@
 
 <body>
 
+
     <!-- ==========================================
          ANIMERANK - INFORMACIÓN DEL ANIME
          ========================================== -->
@@ -49,39 +50,30 @@
     </header>
 
 
+
     <main>
 
+
         <!-- ==========================================
-             INFORMACIÓN DEL ANIME
+             FICHA DEL ANIME
              ========================================== -->
 
 
-        <section class="informacion-anime-pagina">
-
-            <h1>Información del anime</h1>
-
-            <p>
-                Selecciona un anime para consultar toda su información.
-            </p>
-
+        <section class="ficha-pagina">
 
             <div id="ficha-anime">
 
-                <!--
-                Aquí aparecerá posteriormente
-                la información completa del anime.
-                -->
-
                 <p>
-                    🔎 Busca un anime desde AnimeRank
-                    para consultar su información.
+                    🔎 Cargando información del anime...
                 </p>
 
             </div>
 
         </section>
 
+
     </main>
+
 
 
     <footer>
@@ -91,6 +83,281 @@
         </p>
 
     </footer>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT DE INFORMACIÓN
+         ========================================== -->
+
+
+    <script>
+
+        async function cargarAnime() {
+
+            const parametros = new URLSearchParams(
+                window.location.search
+            );
+
+            const id = parametros.get("id");
+
+            const ficha = document.getElementById("ficha-anime");
+
+
+            if (!id) {
+
+                ficha.innerHTML = `
+                    <p>
+                        ❌ No se ha seleccionado ningún anime.
+                    </p>
+                `;
+
+                return;
+
+            }
+
+
+            const query = `
+
+                query ($id: Int) {
+
+                    Media(id: $id, type: ANIME) {
+
+                        id
+
+                        title {
+                            romaji
+                            english
+                            native
+                        }
+
+                        coverImage {
+                            extraLarge
+                        }
+
+                        bannerImage
+
+                        averageScore
+
+                        popularity
+
+                        episodes
+
+                        duration
+
+                        status
+
+                        season
+
+                        seasonYear
+
+                        genres
+
+                        studios {
+                            nodes {
+                                name
+                            }
+                        }
+
+                        description(asHtml: false)
+
+                    }
+
+                }
+
+            `;
+
+
+            try {
+
+                const respuesta = await fetch(
+                    "https://graphql.anilist.co",
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json"
+                        },
+
+                        body: JSON.stringify({
+
+                            query: query,
+
+                            variables: {
+                                id: Number(id)
+                            }
+
+                        })
+
+                    }
+                );
+
+
+                const datos = await respuesta.json();
+
+                const anime = datos.data.Media;
+
+
+                if (!anime) {
+
+                    ficha.innerHTML = `
+                        <p>
+                            ❌ No se encontró el anime.
+                        </p>
+                    `;
+
+                    return;
+
+                }
+
+
+                const titulo =
+                    anime.title.english ||
+                    anime.title.romaji ||
+                    anime.title.native ||
+                    "Sin título";
+
+
+                const puntuacion =
+                    anime.averageScore
+                    ? (anime.averageScore / 10).toFixed(1)
+                    : "N/A";
+
+
+                const descripcion =
+                    anime.description
+                    ? anime.description
+                    : "No hay descripción disponible.";
+
+
+                const estudio =
+                    anime.studios.nodes.length > 0
+                    ? anime.studios.nodes
+                        .map(estudio => estudio.name)
+                        .join(", ")
+                    : "No disponible";
+
+
+                ficha.innerHTML = `
+
+                    <div class="ficha-anime">
+
+
+                        <div class="imagen-anime">
+
+                            <img
+                                src="${anime.coverImage.extraLarge}"
+                                alt="${titulo}"
+                            >
+
+                        </div>
+
+
+
+                        <div class="datos-anime">
+
+
+                            <h1>
+                                ${titulo}
+                            </h1>
+
+
+                            ${
+                                anime.title.romaji &&
+                                anime.title.romaji !== titulo
+                                ? `<p class="titulo-secundario">
+                                    ${anime.title.romaji}
+                                  </p>`
+                                : ""
+                            }
+
+
+                            <div class="datos-principales">
+
+                                <p>
+                                    ⭐ <strong>${puntuacion}/10</strong>
+                                </p>
+
+                                <p>
+                                    👥 Popularidad:
+                                    ${anime.popularity || "N/A"}
+                                </p>
+
+                                <p>
+                                    📅 ${anime.seasonYear || "Año desconocido"}
+                                </p>
+
+                                <p>
+                                    🎬 ${anime.episodes || "?"} episodios
+                                </p>
+
+                                <p>
+                                    ⏱️ ${anime.duration || "?"} min por episodio
+                                </p>
+
+                                <p>
+                                    📺 ${anime.status || "Desconocido"}
+                                </p>
+
+                                <p>
+                                    🎭 ${anime.genres.join(" • ")}
+                                </p>
+
+                                <p>
+                                    🎨 Estudio: ${estudio}
+                                </p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="sinopsis-anime">
+
+                        <h2>
+                            📖 Sinopsis
+                        </h2>
+
+                        <p>
+                            ${descripcion}
+                        </p>
+
+                    </div>
+
+                `;
+
+
+                document.title =
+                    titulo + " - AnimeRank";
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                ficha.innerHTML = `
+
+                    <p>
+                        ❌ No se pudo cargar la información.
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+        cargarAnime();
+
+    </script>
+
 
 </body>
 
