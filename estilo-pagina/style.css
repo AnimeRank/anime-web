@@ -152,3 +152,90 @@ footer {
     background: #17171f;
     color: #888894;
 }
+/* ==========================================
+   RESULTADOS DEL BUSCADOR
+   ========================================== */
+
+.resultados-busqueda {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 40px auto 0;
+    padding: 0 20px;
+}
+
+
+/* TARJETA */
+
+.tarjeta-anime {
+    background: #17171f;
+    border: 1px solid #292936;
+    border-radius: 14px;
+    overflow: hidden;
+    text-align: left;
+    transition: transform 0.2s ease;
+}
+
+
+/* EFECTO AL PASAR EL RATÓN */
+
+.tarjeta-anime:hover {
+    transform: translateY(-5px);
+}
+
+
+/* IMAGEN */
+
+.tarjeta-anime img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* INFORMACIÓN */
+
+.informacion-anime {
+    padding: 18px;
+}
+
+
+.informacion-anime h3 {
+    margin: 0 0 12px;
+    font-size: 20px;
+}
+
+
+.informacion-anime p {
+    margin: 7px 0;
+    color: #c2c2cc;
+    font-size: 14px;
+}
+
+
+.informacion-anime .generos-anime {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+
+.descripcion-anime {
+    line-height: 1.5;
+}
+
+
+/* MÓVILES */
+
+@media (max-width: 600px) {
+
+    .resultados-busqueda {
+        grid-template-columns: 1fr;
+    }
+
+    .tarjeta-anime img {
+        height: 400px;
+    }
+
+}
