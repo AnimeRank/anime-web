@@ -297,3 +297,14 @@ document.addEventListener(
     "DOMContentLoaded",
     aplicarIdioma
 );
+document.addEventListener("DOMContentLoaded", () => {
+
+    const selector = document.getElementById("selector-idioma");
+
+    if (selector) {
+
+        selector.value = idiomaActual;
+
+    }
+
+});
