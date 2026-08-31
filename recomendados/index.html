@@ -45,6 +45,7 @@
             text-decoration: none;
             padding: 8px 12px;
             border-radius: 6px;
+            text-decoration: none;
         }
 
         .menu-principal a:hover {
@@ -59,7 +60,6 @@
 
         h1 {
             font-size: 38px;
-            margin-bottom: 10px;
         }
 
         .descripcion {
@@ -67,27 +67,22 @@
             margin-bottom: 30px;
         }
 
-        .cargando {
-            text-align: center;
-            padding: 50px;
-            font-size: 20px;
-        }
-
-        .animes {
+        #animes {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 25px;
+        }
+
+        .mensaje {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
         }
 
         .tarjeta {
             background: #141414;
             border-radius: 12px;
             overflow: hidden;
-            transition: transform 0.2s;
-        }
-
-        .tarjeta:hover {
-            transform: translateY(-5px);
         }
 
         .tarjeta img {
@@ -102,8 +97,8 @@
         }
 
         .contenido h2 {
-            font-size: 20px;
             margin-top: 0;
+            font-size: 20px;
         }
 
         .contenido p {
@@ -111,8 +106,8 @@
         }
 
         .generos {
-            color: #aaa;
             font-size: 14px;
+            color: #999 !important;
         }
 
         .boton {
@@ -179,12 +174,16 @@
     </h1>
 
     <p class="descripcion">
-        Descubre algunos de los animes mejor valorados y más interesantes.
+        Descubre algunos de los animes mejor valorados.
     </p>
 
 
-    <div id="animes" class="cargando">
-        🔎 Cargando recomendaciones...
+    <div id="animes">
+
+        <div class="mensaje">
+            🔎 Cargando animes...
+        </div>
+
     </div>
 
 </main>
@@ -205,19 +204,12 @@ async function cargarRecomendados() {
 
 
     const query = `
-
         query {
-
-            Page(
-                perPage: 18
-            ) {
-
+            Page(page: 1, perPage: 12) {
                 media(
-                    type: ANIME,
-                    sort: SCORE_DESC,
-                    status: FINISHED
+                    type: ANIME
+                    sort: POPULARITY_DESC
                 ) {
-
                     id
 
                     title {
@@ -231,19 +223,12 @@ async function cargarRecomendados() {
                     }
 
                     averageScore
-
                     episodes
-
                     seasonYear
-
                     genres
-
                 }
-
             }
-
         }
-
     `;
 
 
@@ -252,28 +237,54 @@ async function cargarRecomendados() {
         const respuesta = await fetch(
             "https://graphql.anilist.co",
             {
-
                 method: "POST",
 
                 headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
+                    "Content-Type": "application/json"
                 },
 
                 body: JSON.stringify({
                     query: query
                 })
-
             }
         );
 
 
         const datos = await respuesta.json();
 
+
+        if (datos.errors) {
+
+            console.error(datos.errors);
+
+            contenedor.innerHTML = `
+                <div class="mensaje">
+                    ❌ AniList ha devuelto un error.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        if (
+            !datos.data ||
+            !datos.data.Page ||
+            !datos.data.Page.media
+        ) {
+
+            contenedor.innerHTML = `
+                <div class="mensaje">
+                    ❌ No se pudieron encontrar animes.
+                </div>
+            `;
+
+            return;
+        }
+
+
         const animes = datos.data.Page.media;
 
-
-        contenedor.className = "animes";
 
         contenedor.innerHTML = "";
 
@@ -294,9 +305,9 @@ async function cargarRecomendados() {
 
 
             const generos =
-                anime.genres
-                .slice(0, 3)
-                .join(" • ");
+                anime.genres.length
+                ? anime.genres.slice(0, 3).join(" • ")
+                : "Sin géneros";
 
 
             const tarjeta =
@@ -357,17 +368,25 @@ async function cargarRecomendados() {
 
         });
 
+    }
 
-    } catch (error) {
+
+    catch (error) {
 
         console.error(error);
 
 
         contenedor.innerHTML = `
 
-            <p>
-                ❌ No se pudieron cargar los animes recomendados.
-            </p>
+            <div class="mensaje">
+
+                ❌ No se pudieron cargar los animes.
+
+                <br><br>
+
+                Inténtalo de nuevo más tarde.
+
+            </div>
 
         `;
 
