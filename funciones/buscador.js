@@ -25,14 +25,17 @@ async function buscarAnime() {
                     sort: SEARCH_MATCH
                 ) {
                     id
+
                     title {
                         romaji
                         english
                         native
                     }
+
                     coverImage {
                         large
                     }
+
                     averageScore
                     episodes
                     seasonYear
@@ -46,31 +49,41 @@ async function buscarAnime() {
     try {
 
         const respuesta = await fetch("https://graphql.anilist.co", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
+
             body: JSON.stringify({
                 query: query,
                 variables: {
                     search: texto
                 }
             })
+
         });
+
 
         const datos = await respuesta.json();
 
         const animes = datos.data.Page.media;
 
+
         if (animes.length === 0) {
+
             resultados.innerHTML = `
                 <p>No encontramos animes relacionados con "${texto}".</p>
             `;
+
             return;
         }
 
+
         resultados.innerHTML = "";
+
 
         animes.forEach(anime => {
 
@@ -78,16 +91,19 @@ async function buscarAnime() {
 
             tarjeta.className = "tarjeta-anime";
 
+
             const titulo =
                 anime.title.english ||
                 anime.title.romaji ||
                 anime.title.native ||
                 "Sin título";
 
+
             const puntuacion =
                 anime.averageScore
                 ? (anime.averageScore / 10).toFixed(1)
                 : "N/A";
+
 
             const descripcion =
                 anime.description
@@ -96,54 +112,92 @@ async function buscarAnime() {
                     .slice(0, 180) + "..."
                 : "Sin descripción disponible.";
 
+
             tarjeta.innerHTML = `
+
                 <img
                     src="${anime.coverImage.large}"
                     alt="${titulo}"
                 >
 
+
                 <div class="informacion-anime">
 
-                    <h3>${titulo}</h3>
+                    <h3>
+                        ${titulo}
+                    </h3>
 
-                    <p>⭐ ${puntuacion}/10</p>
 
-                    <p>📅 ${anime.seasonYear || "Año desconocido"}</p>
+                    <p>
+                        ⭐ ${puntuacion}/10
+                    </p>
 
-                    <p>🎬 ${anime.episodes || "?"} episodios</p>
+
+                    <p>
+                        📅 ${anime.seasonYear || "Año desconocido"}
+                    </p>
+
+
+                    <p>
+                        🎬 ${anime.episodes || "?"} episodios
+                    </p>
+
 
                     <p class="generos-anime">
                         ${anime.genres.slice(0, 3).join(" • ")}
                     </p>
 
+
                     <p class="descripcion-anime">
                         ${descripcion}
                     </p>
 
+
+                    <a
+                        class="boton-informacion"
+                        href="informacion-animes/?id=${anime.id}"
+                    >
+                        📖 Ver información
+                    </a>
+
                 </div>
+
             `;
+
 
             resultados.appendChild(tarjeta);
 
         });
+
 
     } catch (error) {
 
         console.error(error);
 
         resultados.innerHTML = `
-            <p>❌ Ha ocurrido un error al buscar. Inténtalo de nuevo.</p>
+            <p>
+                ❌ Ha ocurrido un error al buscar.
+                Inténtalo de nuevo.
+            </p>
         `;
+
     }
+
 }
 
+
+// ==========================================
+// BOTÓN BUSCAR
+// ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const boton = document.querySelector(".barra-busqueda button");
 
     if (boton) {
+
         boton.addEventListener("click", buscarAnime);
+
     }
 
 });
