@@ -234,21 +234,21 @@ async function cargarRecomendados() {
 
     try {
 
-        const respuesta = await fetch(
-            "https://graphql.anilist.co",
-            {
-                method: "POST",
+   const respuesta = await fetch("https://graphql.anilist.co", {
+    method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    },
 
-                body: JSON.stringify({
-                    query: query
-                })
-            }
-        );
+    body: JSON.stringify({
+        query: query,
+        variables: {}
+    })
+});
 
+const datos = await respuesta.json();
 
         const datos = await respuesta.json();
 
