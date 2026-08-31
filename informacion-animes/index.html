@@ -37,7 +37,7 @@
         .menu-principal {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
 
         .menu-principal a {
@@ -52,9 +52,9 @@
         }
 
         main {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: auto;
-            padding: 40px 20px;
+            padding: 30px 20px;
         }
 
         .cargando {
@@ -63,62 +63,83 @@
             padding: 60px;
         }
 
-        .anime {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 40px;
-            background: #111;
-            padding: 30px;
+        .banner {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
             border-radius: 15px;
+            margin-bottom: -80px;
+            opacity: 0.75;
         }
 
-        .anime img {
+        .contenido-anime {
+            position: relative;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 35px;
+            padding: 0 30px 30px;
+        }
+
+        .portada {
             width: 100%;
-            border-radius: 10px;
+            border-radius: 12px;
+            border: 4px solid #111;
+            position: relative;
+        }
+
+        .informacion {
+            padding-top: 90px;
         }
 
         h1 {
-            margin-top: 0;
-            font-size: 38px;
+            font-size: 42px;
+            margin: 0 0 10px;
+        }
+
+        .titulo-japones {
+            color: #aaa;
+            font-size: 18px;
         }
 
         .puntuacion {
-            font-size: 22px;
+            font-size: 24px;
+            margin: 20px 0;
         }
 
         .datos {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            margin: 25px 0;
+            margin: 20px 0;
         }
 
         .dato {
-            background: #1b1b1b;
-            padding: 12px;
+            background: #181818;
+            padding: 13px;
             border-radius: 8px;
         }
 
         .generos {
-            margin: 20px 0;
+            margin: 25px 0;
         }
 
         .genero {
             display: inline-block;
             background: #252525;
-            padding: 7px 12px;
+            padding: 8px 13px;
             margin: 4px;
             border-radius: 20px;
         }
 
         .sinopsis {
-            line-height: 1.7;
+            line-height: 1.8;
             color: #ddd;
+            font-size: 17px;
         }
 
         .volver {
             display: inline-block;
-            margin-top: 30px;
+            margin-top: 25px;
             padding: 12px 20px;
             background: #222;
             color: white;
@@ -126,18 +147,32 @@
             border-radius: 8px;
         }
 
+        .volver:hover {
+            background: #333;
+        }
+
         @media (max-width: 700px) {
 
-            .anime {
-                grid-template-columns: 1fr;
+            .banner {
+                height: 200px;
             }
 
-            .anime img {
-                max-width: 300px;
+            .contenido-anime {
+                grid-template-columns: 1fr;
+                padding: 0 10px 20px;
+            }
+
+            .portada {
+                max-width: 280px;
+                margin: auto;
+            }
+
+            .informacion {
+                padding-top: 90px;
             }
 
             h1 {
-                font-size: 28px;
+                font-size: 30px;
             }
 
             .datos {
@@ -152,6 +187,7 @@
 
 
 <body>
+
 
 <header class="cabecera">
 
@@ -183,7 +219,9 @@
 <main>
 
     <div id="resultado" class="cargando">
+
         🔎 Cargando información del anime...
+
     </div>
 
 </main>
@@ -199,17 +237,26 @@ async function cargarAnime() {
 
     const id = parametros.get("id");
 
+
     if (!id) {
 
         resultado.innerHTML = `
+
             <h2>No se ha seleccionado ningún anime.</h2>
-            <a class="volver" href="../">🏠 Volver a AnimeRank</a>
+
+            <a class="volver" href="../">
+                🏠 Volver a AnimeRank
+            </a>
+
         `;
 
         return;
+
     }
 
+
     const query = `
+
         query ($id: Int) {
 
             Media(id: $id, type: ANIME) {
@@ -255,31 +302,34 @@ async function cargarAnime() {
             }
 
         }
+
     `;
 
 
     try {
 
-        const respuesta = await fetch("https://graphql.anilist.co", {
+        const respuesta = await fetch(
+            "https://graphql.anilist.co",
+            {
+                method: "POST",
 
-            method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
 
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
+                body: JSON.stringify({
 
-            body: JSON.stringify({
+                    query: query,
 
-                query: query,
+                    variables: {
+                        id: Number(id)
+                    }
 
-                variables: {
-                    id: Number(id)
-                }
+                })
 
-            })
-
-        });
+            }
+        );
 
 
         const datos = await respuesta.json();
@@ -290,11 +340,17 @@ async function cargarAnime() {
         if (!anime) {
 
             resultado.innerHTML = `
+
                 <h2>Anime no encontrado.</h2>
-                <a class="volver" href="../">🏠 Volver a AnimeRank</a>
+
+                <a class="volver" href="../">
+                    🏠 Volver a AnimeRank
+                </a>
+
             `;
 
             return;
+
         }
 
 
@@ -303,6 +359,11 @@ async function cargarAnime() {
             anime.title.romaji ||
             anime.title.native ||
             "Sin título";
+
+
+        const tituloJapones =
+            anime.title.native ||
+            "No disponible";
 
 
         const puntuacion =
@@ -318,96 +379,152 @@ async function cargarAnime() {
 
         const estudios =
             anime.studios.nodes.length > 0
-            ? anime.studios.nodes.map(estudio => estudio.name).join(", ")
+            ? anime.studios.nodes
+                .map(estudio => estudio.name)
+                .join(", ")
             : "Desconocido";
 
 
-        resultado.className = "anime";
+        resultado.className = "";
 
 
         resultado.innerHTML = `
 
-            <div>
-
-                <img
-                    src="${anime.coverImage.large}"
-                    alt="${titulo}"
-                >
-
-            </div>
-
-
-            <div>
-
-                <h1>${titulo}</h1>
-
-                <p class="puntuacion">
-                    ⭐ ${puntuacion}/10
-                </p>
+            ${
+                anime.bannerImage
+                ? `
+                    <img
+                        class="banner"
+                        src="${anime.bannerImage}"
+                        alt="${titulo}"
+                    >
+                  `
+                : ""
+            }
 
 
-                <div class="datos">
+            <div class="contenido-anime">
 
-                    <div class="dato">
-                        📅 Año:
-                        ${anime.seasonYear || "Desconocido"}
-                    </div>
 
-                    <div class="dato">
-                        🎬 Episodios:
-                        ${anime.episodes || "?"}
-                    </div>
+                <div>
 
-                    <div class="dato">
-                        ⏱️ Duración:
-                        ${anime.duration ? anime.duration + " min" : "Desconocida"}
-                    </div>
-
-                    <div class="dato">
-                        📺 Estado:
-                        ${anime.status || "Desconocido"}
-                    </div>
-
-                    <div class="dato">
-                        👥 Popularidad:
-                        ${anime.popularity || "Desconocida"}
-                    </div>
-
-                    <div class="dato">
-                        🎨 Estudio:
-                        ${estudios}
-                    </div>
+                    <img
+                        class="portada"
+                        src="${anime.coverImage.large}"
+                        alt="${titulo}"
+                    >
 
                 </div>
 
 
-                <div class="generos">
+                <div class="informacion">
 
-                    <strong>🎭 Géneros:</strong>
 
-                    <br>
+                    <h1>
+                        ${titulo}
+                    </h1>
 
-                    ${anime.genres
-                        .map(genero => `
-                            <span class="genero">
-                                ${genero}
-                            </span>
-                        `)
-                        .join("")}
+
+                    <div class="titulo-japones">
+                        🇯🇵 ${tituloJapones}
+                    </div>
+
+
+                    <div class="puntuacion">
+                        ⭐ ${puntuacion}/10
+                    </div>
+
+
+                    <div class="datos">
+
+
+                        <div class="dato">
+                            👥 Popularidad:
+                            ${anime.popularity || "Desconocida"}
+                        </div>
+
+
+                        <div class="dato">
+                            📅 Año:
+                            ${anime.seasonYear || "Desconocido"}
+                        </div>
+
+
+                        <div class="dato">
+                            📺 Temporada:
+                            ${anime.season || "Desconocida"}
+                        </div>
+
+
+                        <div class="dato">
+                            🎬 Episodios:
+                            ${anime.episodes || "?"}
+                        </div>
+
+
+                        <div class="dato">
+                            ⏱️ Duración:
+                            ${
+                                anime.duration
+                                ? anime.duration + " min"
+                                : "Desconocida"
+                            }
+                        </div>
+
+
+                        <div class="dato">
+                            📺 Estado:
+                            ${anime.status || "Desconocido"}
+                        </div>
+
+
+                        <div class="dato">
+                            🎨 Estudio:
+                            ${estudios}
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="generos">
+
+                        <strong>🎭 Géneros:</strong>
+
+                        <br>
+
+                        ${
+                            anime.genres
+                            .map(genero => `
+                                <span class="genero">
+                                    ${genero}
+                                </span>
+                            `)
+                            .join("")
+                        }
+
+                    </div>
+
+
+                    <h2>
+                        📖 Sinopsis
+                    </h2>
+
+
+                    <p class="sinopsis">
+                        ${descripcion}
+                    </p>
+
+
+                    <a
+                        class="volver"
+                        href="../"
+                    >
+                        ← Volver a AnimeRank
+                    </a>
+
 
                 </div>
-
-
-                <h2>📖 Sinopsis</h2>
-
-                <p class="sinopsis">
-                    ${descripcion}
-                </p>
-
-
-                <a class="volver" href="../">
-                    ← Volver a AnimeRank
-                </a>
 
             </div>
 
@@ -418,10 +535,24 @@ async function cargarAnime() {
 
         console.error(error);
 
+
         resultado.innerHTML = `
-            <h2>❌ No se pudo cargar la información.</h2>
-            <p>Inténtalo de nuevo más tarde.</p>
-            <a class="volver" href="../">🏠 Volver a AnimeRank</a>
+
+            <h2>
+                ❌ No se pudo cargar la información.
+            </h2>
+
+            <p>
+                Inténtalo de nuevo más tarde.
+            </p>
+
+            <a
+                class="volver"
+                href="../"
+            >
+                🏠 Volver a AnimeRank
+            </a>
+
         `;
 
     }
