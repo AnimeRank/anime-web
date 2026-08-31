@@ -1,1 +1,249 @@
-<h1>Traductor</h1>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AnimeRank - Traductor</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #080808;
+            color: white;
+        }
+
+        .cabecera {
+            background: #111;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .menu-principal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .menu-principal a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .menu-principal a:hover {
+            background: #222;
+        }
+
+        main {
+            max-width: 900px;
+            margin: auto;
+            padding: 50px 20px;
+        }
+
+        h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .traductor {
+            background: #141414;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        select,
+        textarea,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 7px;
+            border: 1px solid #333;
+            background: #0d0d0d;
+            color: white;
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        button {
+            background: #222;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        .resultado {
+            background: #0d0d0d;
+            border: 1px solid #333;
+            border-radius: 7px;
+            padding: 20px;
+            min-height: 100px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="cabecera">
+
+    <div class="logo">
+        AnimeRank
+    </div>
+
+
+    <nav class="menu-principal">
+
+        <a href="../">🏠 Inicio</a>
+
+        <a href="../buscador/">🔎 Buscador</a>
+
+        <a href="../recomendados/">⭐ Recomendados</a>
+
+        <a href="../populares/">🔥 Populares</a>
+
+        <a href="../temporadas/">📅 Temporadas</a>
+
+        <a href="../generos/">🎭 Géneros</a>
+
+        <a href="../traductor/">🌐 Traductor</a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <h1>🌐 Traductor</h1>
+
+    <p class="descripcion">
+        Traduce textos para facilitar la lectura de información sobre anime.
+    </p>
+
+
+    <section class="traductor">
+
+        <label for="idioma">
+            Idioma
+        </label>
+
+        <select id="idioma">
+
+            <option value="en">
+                🇬🇧 English
+            </option>
+
+            <option value="es">
+                🇪🇸 Español
+            </option>
+
+            <option value="ja">
+                🇯🇵 日本語
+            </option>
+
+            <option value="fr">
+                🇫🇷 Français
+            </option>
+
+            <option value="de">
+                🇩🇪 Deutsch
+            </option>
+
+            <option value="it">
+                🇮🇹 Italiano
+            </option>
+
+            <option value="pt">
+                🇵🇹 Português
+            </option>
+
+        </select>
+
+
+        <label for="texto">
+            Texto
+        </label>
+
+        <textarea
+            id="texto"
+            placeholder="Escribe aquí el texto que quieres traducir..."
+        ></textarea>
+
+
+        <button id="boton-traducir">
+            🌐 Traducir
+        </button>
+
+
+        <label>
+            Resultado
+        </label>
+
+        <div
+            id="resultado"
+            class="resultado"
+        >
+            Aquí aparecerá la traducción.
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    © 2026 AnimeRank - Buscador y guía de anime
+
+</footer>
+
+
+</body>
+
+</html>
