@@ -85,6 +85,29 @@
 
             <div class="resultados-busqueda"></div>
 
+<!-- RESULTADOS DEL BUSCADOR -->
+
+<div class="resultados-busqueda"></div>
+
+
+<!-- ==========================================
+     ANIMES RECOMENDADOS
+     ========================================== -->
+
+<section class="recomendados-inicio">
+
+    <h2>⭐ Animes recomendados</h2>
+
+    <p>
+        Descubre algunos de los mejores animes para empezar a explorar.
+    </p>
+
+    <div id="animes-recomendados">
+        🔎 Cargando animes...
+    </div>
+
+</section>
+            
         </section>
 
 
@@ -206,7 +229,128 @@
 
 
     <script src="funciones/buscador.js"></script>
+<script>
 
+async function cargarRecomendadosInicio() {
+
+    const contenedor = document.getElementById("animes-recomendados");
+
+    const query = `
+        query {
+            Page(page: 1, perPage: 6) {
+                media(
+                    type: ANIME
+                    sort: POPULARITY_DESC
+                ) {
+                    id
+
+                    title {
+                        romaji
+                        english
+                        native
+                    }
+
+                    coverImage {
+                        large
+                    }
+
+                    averageScore
+                    episodes
+                    seasonYear
+                    genres
+                }
+            }
+        }
+    `;
+
+    try {
+
+        const respuesta = await fetch("https://graphql.anilist.co", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+
+            body: JSON.stringify({
+                query: query,
+                variables: {}
+            })
+
+        });
+
+        const datos = await respuesta.json();
+
+        if (!datos.data || !datos.data.Page) {
+
+            contenedor.innerHTML =
+                "❌ No se pudieron cargar los animes.";
+
+            return;
+        }
+
+        const animes = datos.data.Page.media;
+
+        contenedor.innerHTML = "";
+
+        animes.forEach(anime => {
+
+            const titulo =
+                anime.title.english ||
+                anime.title.romaji ||
+                anime.title.native ||
+                "Sin título";
+
+            const puntuacion =
+                anime.averageScore
+                ? (anime.averageScore / 10).toFixed(1)
+                : "N/A";
+
+            const tarjeta = document.createElement("article");
+
+            tarjeta.innerHTML = `
+
+                <img
+                    src="${anime.coverImage.large}"
+                    alt="${titulo}"
+                >
+
+                <h3>${titulo}</h3>
+
+                <p>⭐ ${puntuacion}/10</p>
+
+                <p>
+                    📅 ${anime.seasonYear || "Año desconocido"}
+                </p>
+
+                <a
+                    href="informacion-animes/?id=${anime.id}"
+                >
+                    📖 Ver información
+                </a>
+
+            `;
+
+            contenedor.appendChild(tarjeta);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        contenedor.innerHTML =
+            "❌ No se pudieron cargar los animes.";
+
+    }
+
+}
+
+cargarRecomendadosInicio();
+
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
