@@ -243,7 +243,31 @@
 
 </footer>
 
+<script src="../idiomas.js"></script>
 
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const selector = document.getElementById("idioma");
+
+    if (selector) {
+
+        selector.value =
+            localStorage.getItem("animerank-idioma") || "es";
+
+        selector.addEventListener("change", function() {
+
+            cambiarIdioma(this.value);
+
+        });
+
+    }
+
+});
+
+</script>
+    
 </body>
 
 </html>
