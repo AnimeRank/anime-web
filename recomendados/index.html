@@ -1,1 +1,386 @@
-<h1>Animes recomendados</h1>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AnimeRank - Recomendados</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #080808;
+            color: white;
+        }
+
+        .cabecera {
+            background: #111;
+            padding: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .menu-principal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .menu-principal a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+        }
+
+        .menu-principal a:hover {
+            background: #222;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: auto;
+            padding: 35px 20px;
+        }
+
+        h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .descripcion {
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+
+        .cargando {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+        }
+
+        .animes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .tarjeta {
+            background: #141414;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-5px);
+        }
+
+        .tarjeta img {
+            width: 100%;
+            height: 310px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .contenido {
+            padding: 18px;
+        }
+
+        .contenido h2 {
+            font-size: 20px;
+            margin-top: 0;
+        }
+
+        .contenido p {
+            color: #ccc;
+        }
+
+        .generos {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .boton {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .boton:hover {
+            background: #333;
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="cabecera">
+
+    <div class="logo">
+        AnimeRank
+    </div>
+
+
+    <nav class="menu-principal">
+
+        <a href="../">🏠 Inicio</a>
+
+        <a href="../buscador/">🔎 Buscador</a>
+
+        <a href="../recomendados/">⭐ Recomendados</a>
+
+        <a href="../populares/">🔥 Populares</a>
+
+        <a href="../temporadas/">📅 Temporadas</a>
+
+        <a href="../generos/">🎭 Géneros</a>
+
+        <a href="../traductor/">🌐 Traductor</a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <h1>
+        ⭐ Animes recomendados
+    </h1>
+
+    <p class="descripcion">
+        Descubre algunos de los animes mejor valorados y más interesantes.
+    </p>
+
+
+    <div id="animes" class="cargando">
+        🔎 Cargando recomendaciones...
+    </div>
+
+</main>
+
+
+<footer>
+
+    © 2026 AnimeRank - Buscador y guía de anime
+
+</footer>
+
+
+<script>
+
+async function cargarRecomendados() {
+
+    const contenedor = document.getElementById("animes");
+
+
+    const query = `
+
+        query {
+
+            Page(
+                perPage: 18
+            ) {
+
+                media(
+                    type: ANIME,
+                    sort: SCORE_DESC,
+                    status: FINISHED
+                ) {
+
+                    id
+
+                    title {
+                        romaji
+                        english
+                        native
+                    }
+
+                    coverImage {
+                        large
+                    }
+
+                    averageScore
+
+                    episodes
+
+                    seasonYear
+
+                    genres
+
+                }
+
+            }
+
+        }
+
+    `;
+
+
+    try {
+
+        const respuesta = await fetch(
+            "https://graphql.anilist.co",
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+
+                body: JSON.stringify({
+                    query: query
+                })
+
+            }
+        );
+
+
+        const datos = await respuesta.json();
+
+        const animes = datos.data.Page.media;
+
+
+        contenedor.className = "animes";
+
+        contenedor.innerHTML = "";
+
+
+        animes.forEach(anime => {
+
+            const titulo =
+                anime.title.english ||
+                anime.title.romaji ||
+                anime.title.native ||
+                "Sin título";
+
+
+            const puntuacion =
+                anime.averageScore
+                ? (anime.averageScore / 10).toFixed(1)
+                : "N/A";
+
+
+            const generos =
+                anime.genres
+                .slice(0, 3)
+                .join(" • ");
+
+
+            const tarjeta =
+                document.createElement("article");
+
+
+            tarjeta.className = "tarjeta";
+
+
+            tarjeta.innerHTML = `
+
+                <img
+                    src="${anime.coverImage.large}"
+                    alt="${titulo}"
+                >
+
+
+                <div class="contenido">
+
+                    <h2>
+                        ${titulo}
+                    </h2>
+
+
+                    <p>
+                        ⭐ ${puntuacion}/10
+                    </p>
+
+
+                    <p>
+                        📅 ${anime.seasonYear || "Año desconocido"}
+                    </p>
+
+
+                    <p>
+                        🎬 ${anime.episodes || "?"} episodios
+                    </p>
+
+
+                    <p class="generos">
+                        🎭 ${generos}
+                    </p>
+
+
+                    <a
+                        class="boton"
+                        href="../informacion-animes/?id=${anime.id}"
+                    >
+                        📖 Ver información
+                    </a>
+
+                </div>
+
+            `;
+
+
+            contenedor.appendChild(tarjeta);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        contenedor.innerHTML = `
+
+            <p>
+                ❌ No se pudieron cargar los animes recomendados.
+            </p>
+
+        `;
+
+    }
+
+}
+
+
+cargarRecomendados();
+
+</script>
+
+
+</body>
+
+</html>
