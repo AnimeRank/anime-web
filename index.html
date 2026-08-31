@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -21,29 +20,59 @@
          ANIMERANK - PÁGINA PRINCIPAL
          ========================================== -->
 
-
     <header class="cabecera">
 
         <div class="logo">
             AnimeRank
         </div>
 
+        <!-- SELECTOR DE IDIOMA -->
+
+        <select
+            id="selector-idioma"
+            onchange="cambiarIdioma(this.value)"
+        >
+
+            <option value="es">🇪🇸 Español</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="pt">🇵🇹 Português</option>
+
+        </select>
+
 
         <nav class="menu-principal">
 
-            <a href="index.html">🏠 Inicio</a>
+            <a href="index.html" data-idioma="inicio">
+                🏠 Inicio
+            </a>
 
-            <a href="buscador/">🔎 Buscador</a>
+            <a href="buscador/" data-idioma="buscador">
+                🔎 Buscador
+            </a>
 
-            <a href="recomendados/">⭐ Recomendados</a>
+            <a href="recomendados/" data-idioma="recomendados">
+                ⭐ Recomendados
+            </a>
 
-            <a href="populares/">🔥 Populares</a>
+            <a href="populares/" data-idioma="populares">
+                🔥 Populares
+            </a>
 
-            <a href="temporadas/">📅 Temporadas</a>
+            <a href="temporadas/" data-idioma="temporadas">
+                📅 Temporadas
+            </a>
 
-            <a href="generos/">🎭 Géneros</a>
+            <a href="generos/" data-idioma="generos">
+                🎭 Géneros
+            </a>
 
-            <a href="traductor/">🌐 Traductor</a>
+            <a href="traductor/" data-idioma="traductor">
+                🌐 Traductor
+            </a>
 
         </nav>
 
@@ -57,12 +86,13 @@
              BUSCADOR CENTRAL
              ========================================== -->
 
-
         <section class="buscador-principal">
 
-            <h1>Descubre tu próximo anime</h1>
+            <h1 data-idioma="tituloInicio">
+                Descubre tu próximo anime
+            </h1>
 
-            <p>
+            <p data-idioma="textoInicio">
                 Busca un anime por nombre, género o temática.
             </p>
 
@@ -74,7 +104,7 @@
                     placeholder="🔎 Escribe el nombre de un anime..."
                 >
 
-                <button>
+                <button data-idioma="botonBuscar">
                     Buscar
                 </button>
 
@@ -85,43 +115,45 @@
 
             <div class="resultados-busqueda"></div>
 
-<!-- RESULTADOS DEL BUSCADOR -->
 
-<div class="resultados-busqueda"></div>
-
-
-<!-- ==========================================
-     ANIMES RECOMENDADOS
-     ========================================== -->
-
-<section class="recomendados-inicio">
-
-    <h2>⭐ Animes recomendados</h2>
-
-    <p>
-        Descubre algunos de los mejores animes para empezar a explorar.
-    </p>
-
-    <div id="animes-recomendados">
-        🔎 Cargando animes...
-    </div>
-
-</section>
-            
         </section>
 
+
+        <!-- ==========================================
+             ANIMES RECOMENDADOS
+             ========================================== -->
+
+        <section class="recomendados-inicio">
+
+            <h2 data-idioma="recomendadoTitulo">
+                ⭐ Animes recomendados
+            </h2>
+
+            <p data-idioma="recomendadoTexto">
+                Descubre algunos de los mejores animes para empezar a explorar.
+            </p>
+
+
+            <div id="animes-recomendados">
+
+                🔎 Cargando animes...
+
+            </div>
+
+        </section>
 
 
         <!-- ==========================================
              PRESENTACIÓN
              ========================================== -->
 
-
         <section class="presentacion">
 
-            <h2>Explora el mundo del anime</h2>
+            <h2 data-idioma="explorar">
+                Explora el mundo del anime
+            </h2>
 
-            <p>
+            <p data-idioma="textoExplorar">
                 Encuentra animes de acción, fantasía, isekai,
                 reencarnación, magia, espadas, romance y mucho más.
             </p>
@@ -129,11 +161,9 @@
         </section>
 
 
-
         <!-- ==========================================
              SECCIONES
              ========================================== -->
-
 
         <section class="secciones">
 
@@ -142,7 +172,7 @@
 
                 ⭐
 
-                <strong>
+                <strong data-idioma="recomendados">
                     Recomendados
                 </strong>
 
@@ -153,12 +183,11 @@
             </a>
 
 
-
             <a href="populares/" class="seccion">
 
                 🔥
 
-                <strong>
+                <strong data-idioma="populares">
                     Populares
                 </strong>
 
@@ -169,12 +198,11 @@
             </a>
 
 
-
             <a href="temporadas/" class="seccion">
 
                 📅
 
-                <strong>
+                <strong data-idioma="temporadas">
                     Temporadas
                 </strong>
 
@@ -185,12 +213,11 @@
             </a>
 
 
-
             <a href="generos/" class="seccion">
 
                 🎭
 
-                <strong>
+                <strong data-idioma="generos">
                     Géneros
                 </strong>
 
@@ -207,165 +234,204 @@
     </main>
 
 
-
     <!-- ==========================================
          PIE DE PÁGINA
          ========================================== -->
 
-
     <footer>
 
-        <p>
+        <p data-idioma="pie">
             © 2026 AnimeRank - Buscador y guía de anime
         </p>
 
     </footer>
 
 
-
     <!-- ==========================================
          JAVASCRIPT DEL BUSCADOR
          ========================================== -->
 
-
     <script src="funciones/buscador.js"></script>
-<script src="funciones/idiomas.js"></script>
 
-async function cargarRecomendadosInicio() {
 
-    const contenedor = document.getElementById("animes-recomendados");
+    <!-- ==========================================
+         SISTEMA DE IDIOMAS
+         ========================================== -->
 
-    const query = `
-        query {
-            Page(page: 1, perPage: 6) {
-                media(
-                    type: ANIME
-                    sort: POPULARITY_DESC
-                ) {
-                    id
+    <script src="funciones/idiomas.js"></script>
 
-                    title {
-                        romaji
-                        english
-                        native
+
+    <!-- ==========================================
+         ANIMES RECOMENDADOS
+         ========================================== -->
+
+    <script>
+
+    async function cargarRecomendadosInicio() {
+
+        const contenedor =
+            document.getElementById("animes-recomendados");
+
+
+        const query = `
+            query {
+                Page(page: 1, perPage: 6) {
+
+                    media(
+                        type: ANIME
+                        sort: POPULARITY_DESC
+                    ) {
+
+                        id
+
+                        title {
+                            romaji
+                            english
+                            native
+                        }
+
+                        coverImage {
+                            large
+                        }
+
+                        averageScore
+                        episodes
+                        seasonYear
+                        genres
+
                     }
 
-                    coverImage {
-                        large
-                    }
-
-                    averageScore
-                    episodes
-                    seasonYear
-                    genres
                 }
             }
-        }
-    `;
+        `;
 
-    try {
 
-        const respuesta = await fetch("https://graphql.anilist.co", {
+        try {
 
-            method: "POST",
+            const respuesta =
+                await fetch("https://graphql.anilist.co", {
 
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
+                    method: "POST",
 
-            body: JSON.stringify({
-                query: query,
-                variables: {}
-            })
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
 
-        });
+                    body: JSON.stringify({
+                        query: query,
+                        variables: {}
+                    })
 
-        const datos = await respuesta.json();
+                });
 
-        if (!datos.data || !datos.data.Page) {
+
+            const datos =
+                await respuesta.json();
+
+
+            if (
+                !datos.data ||
+                !datos.data.Page ||
+                !datos.data.Page.media
+            ) {
+
+                contenedor.innerHTML =
+                    "❌ No se pudieron cargar los animes.";
+
+                return;
+
+            }
+
+
+            const animes =
+                datos.data.Page.media;
+
+
+            contenedor.innerHTML = "";
+
+
+            animes.forEach(anime => {
+
+                const titulo =
+                    anime.title.english ||
+                    anime.title.romaji ||
+                    anime.title.native ||
+                    "Sin título";
+
+
+                const puntuacion =
+                    anime.averageScore
+                    ? (anime.averageScore / 10).toFixed(1)
+                    : "N/A";
+
+
+                const tarjeta =
+                    document.createElement("article");
+
+
+                tarjeta.className =
+                    "tarjeta-anime";
+
+
+                tarjeta.innerHTML = `
+
+                    <img
+                        src="${anime.coverImage.large}"
+                        alt="${titulo}"
+                    >
+
+                    <div class="informacion-anime">
+
+                        <h3>
+                            ${titulo}
+                        </h3>
+
+                        <p>
+                            ⭐ ${puntuacion}/10
+                        </p>
+
+                        <p>
+                            📅 ${anime.seasonYear || "Año desconocido"}
+                        </p>
+
+                        <p>
+                            🎬 ${anime.episodes || "?"} episodios
+                        </p>
+
+                        <a
+                            href="informacion-animes/?id=${anime.id}"
+                        >
+                            📖 Ver información
+                        </a>
+
+                    </div>
+
+                `;
+
+
+                contenedor.appendChild(tarjeta);
+
+            });
+
+
+        } catch (error) {
+
+            console.error(error);
 
             contenedor.innerHTML =
                 "❌ No se pudieron cargar los animes.";
 
-            return;
         }
-
-        const animes = datos.data.Page.media;
-
-        contenedor.innerHTML = "";
-
-        animes.forEach(anime => {
-
-            const titulo =
-                anime.title.english ||
-                anime.title.romaji ||
-                anime.title.native ||
-                "Sin título";
-
-            const puntuacion =
-                anime.averageScore
-                ? (anime.averageScore / 10).toFixed(1)
-                : "N/A";
-
-            const tarjeta = document.createElement("article");
-
-            tarjeta.innerHTML = `
-
-                <img
-                    src="${anime.coverImage.large}"
-                    alt="${titulo}"
-                >
-
-                <h3>${titulo}</h3>
-
-                <p>⭐ ${puntuacion}/10</p>
-
-                <p>
-                    📅 ${anime.seasonYear || "Año desconocido"}
-                </p>
-
-                <a
-                    href="informacion-animes/?id=${anime.id}"
-                >
-                    📖 Ver información
-                </a>
-
-            `;
-
-            contenedor.appendChild(tarjeta);
-
-        });
-
-    } catch (error) {
-
-        console.error(error);
-
-        contenedor.innerHTML =
-            "❌ No se pudieron cargar los animes.";
 
     }
 
-}
 
-cargarRecomendadosInicio();
+    cargarRecomendadosInicio();
 
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
+    </script>
 
-    const boton = document.querySelector(".barra-busqueda button");
 
-    boton.addEventListener("click", function() {
-
-        buscarAnime();
-
-    });
-
-});
-</script>
-    
 </body>
 
 </html>
-```
