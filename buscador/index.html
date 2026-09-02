@@ -1,1 +1,131 @@
-<h1>Buscador de Anime</h1>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AnimeRank - Buscador</title>
+
+    <link rel="stylesheet" href="../estilo-pagina/style.css">
+
+</head>
+
+
+<body>
+
+    <header class="cabecera">
+
+        <div class="logo">
+            <a href="../index.html" style="color:inherit; text-decoration:none;">
+                AnimeRank
+            </a>
+        </div>
+
+        <!-- SELECTOR DE IDIOMA -->
+
+        <select
+            id="selector-idioma"
+            onchange="cambiarIdioma(this.value)"
+        >
+
+            <option value="es">🇪🇸 Español</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="ja">🇯🇵 日本語</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="it">🇮🇹 Italiano</option>
+            <option value="pt">🇵🇹 Português</option>
+
+        </select>
+
+
+        <nav class="menu-principal">
+
+            <a href="../index.html" data-idioma="inicio">
+                🏠 Inicio
+            </a>
+
+            <a href="../buscador/" data-idioma="buscador">
+                🔎 Buscador
+            </a>
+
+            <a href="../recomendados/" data-idioma="recomendados">
+                ⭐ Recomendados
+            </a>
+
+            <a href="../populares/" data-idioma="populares">
+                🔥 Populares
+            </a>
+
+            <a href="../temporadas/" data-idioma="temporadas">
+                📅 Temporadas
+            </a>
+
+            <a href="../generos/" data-idioma="generos">
+                🎭 Géneros
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <section class="buscador-principal">
+
+            <h1 data-idioma="tituloInicio">
+                Descubre tu próximo anime
+            </h1>
+
+            <p data-idioma="textoInicio">
+                Busca un anime por nombre, género o temática.
+            </p>
+
+
+            <div class="barra-busqueda">
+
+                <input
+                    type="text"
+                    placeholder="🔎 Escribe el nombre de un anime..."
+                >
+
+                <button data-idioma="botonBuscar">
+                    Buscar
+                </button>
+
+            </div>
+
+
+            <!-- RESULTADOS DEL BUSCADOR -->
+
+            <div class="resultados-busqueda"></div>
+
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p data-idioma="pie">
+            © 2026 AnimeRank - Buscador y guía de anime
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT DEL BUSCADOR -->
+    <script src="../funciones/buscador.js"></script>
+
+    <!-- SISTEMA DE IDIOMAS -->
+    <script src="../idiomas.js"></script>
+
+
+</body>
+
+</html>
